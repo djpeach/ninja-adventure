@@ -33,7 +33,8 @@ func handle_input() -> void:
 
 func handle_animation() -> void:
 	if not velocity or not can_walk:
-		return anim_player.stop()
+		anim_player.stop()
+		return
 	
 	var animation_map = {
 		Vector2.UP: "walk_up",
