@@ -107,6 +107,21 @@ height = 14.0
 radius = 6.0
 height = 14.0
 
+[sub_resource type="Animation" id="Animation_u7tdq"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D/HurtIndicator:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 0, 0, 0)]
+}
+
 [sub_resource type="Animation" id="Animation_8kl1m"]
 resource_name = "blink_hurt"
 length = 1.2
@@ -139,21 +154,6 @@ tracks/1/keys = {
 "args": [false],
 "method": &"set_is_hurt"
 }]
-}
-
-[sub_resource type="Animation" id="Animation_u7tdq"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D/HurtIndicator:self_modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 0, 0, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_yc64g"]
@@ -202,6 +202,3 @@ debug_color = Color(0.629875, 0.413511, 0.85169, 0.42)
 libraries = {
 "": SubResource("AnimationLibrary_yc64g")
 }
-
-[connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]
-[connection signal="area_exited" from="HurtBox" to="." method="_on_hurt_box_area_exited"]
