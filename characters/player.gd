@@ -12,6 +12,7 @@ signal damage_taken(damage: float)
 var direction := Vector2.ZERO
 var can_walk := true: set = set_can_walk
 var is_hurt := false: set = set_is_hurt
+var enemy_collisions: Array[Area2D]
 
 func init() -> void:
 	max_health_changed.emit(3)
@@ -20,6 +21,7 @@ func init() -> void:
 func _physics_process(delta: float) -> void:
 	handle_input()
 	handle_animation()
+	handle_collisions()
 
 	move_and_slide()
 
@@ -49,8 +51,23 @@ func handle_animation() -> void:
 
 
 func _on_hurt_box_area_entered(area: Area2D) -> void:
-	if is_hurt:
-		return
+	enemy_collisions.append(area)
+
+
+func _on_hurt_box_area_exited(area: Area2D) -> void:
+	enemy_collisions.erase(area)
+
+
+func handle_collisions():
+	if is_hurt: return
+	
+	for hit_box in enemy_collisions:
+		handle_hit_by_enemy(hit_box)
+		break # only first hitbox will have an effect
+
+
+func handle_hit_by_enemy(area: Area2D) -> void:
+	if is_hurt: return
 	
 	is_hurt = true
 	can_walk = false
