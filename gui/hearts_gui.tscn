@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://dnt116gsag6xw"]
+
+[ext_resource type="Script" path="res://gui/hearts_gui.gd" id="1_rnsod"]
+
+[node name="HeartsGui" type="HBoxContainer"]
+self_modulate = Color(0.82295, 0.175174, 0.168808, 1)
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+grow_horizontal = 0
+theme_override_constants/separation = 2
+script = ExtResource("1_rnsod")
