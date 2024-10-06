@@ -6,13 +6,13 @@ signal damage_taken(damage: float)
 
 @export var speed: int = 100
 
-@onready var anim_player: AnimationPlayer = $AnimationPlayer
-@onready var effects_player: AnimationPlayer = $EffectsAnimations
+@onready var anim_player := $AnimationPlayer
+@onready var effects_player := $EffectsAnimations
+@onready var hurt_box := $HurtBox
 
 var direction := Vector2.ZERO
 var can_walk := true: set = set_can_walk
 var is_hurt := false: set = set_is_hurt
-var enemy_collisions: Array[Area2D]
 
 func init() -> void:
 	max_health_changed.emit(3)
@@ -33,7 +33,8 @@ func handle_input() -> void:
 
 func handle_animation() -> void:
 	if not velocity or not can_walk:
-		return anim_player.stop()
+		anim_player.stop()
+		return
 	
 	var animation_map = {
 		Vector2.UP: "walk_up",
@@ -50,18 +51,10 @@ func handle_animation() -> void:
 	anim_player.play(animation_map[direction])
 
 
-func _on_hurt_box_area_entered(area: Area2D) -> void:
-	enemy_collisions.append(area)
-
-
-func _on_hurt_box_area_exited(area: Area2D) -> void:
-	enemy_collisions.erase(area)
-
-
 func handle_collisions():
 	if is_hurt: return
 	
-	for hit_box in enemy_collisions:
+	for hit_box in hurt_box.get_overlapping_areas():
 		handle_hit_by_enemy(hit_box)
 		break # only first hitbox will have an effect
 
